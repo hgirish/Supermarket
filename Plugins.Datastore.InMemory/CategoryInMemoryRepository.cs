@@ -22,9 +22,24 @@ public class CategoryInMemoryRepository : ICategoryRepository
         {
             return;
         }
-        var maxId = _categories.Max(x => x.CategoryId);
+        int maxId = 0;
+        if (_categories != null && _categories.Count() > 0)
+        {
+            maxId = _categories.Max(x => x.CategoryId);
+        }
+         
         category.CategoryId = maxId + 1;
         _categories.Add(category);
+    }
+
+    public void DeleteCategory(int categoryId)
+    {
+        var categoryToDelete = _categories.FirstOrDefault(x => x.CategoryId == categoryId);
+        if (categoryToDelete == null)
+        {
+            return;
+        }
+        _categories.Remove(categoryToDelete);
     }
 
     public IEnumerable<Category> GetCategories()
