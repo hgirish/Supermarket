@@ -10,15 +10,15 @@ public class CategoryInMemoryRepository : ICategoryRepository
         _categories = new List<Category>()
         {
             new Category{CategoryId = 1, Name = "Beverage", Description="Beverage"},
-                        new Category{CategoryId = 1, Name = "Bakery", Description="Bakery"},
-            new Category{CategoryId = 1, Name = "Meat", Description="Meat"},
+                        new Category{CategoryId = 2, Name = "Bakery", Description="Bakery"},
+            new Category{CategoryId = 3, Name = "Meat", Description="Meat"},
 
         };
     }
 
     public void AddCategory(Category category)
     {
-        if (_categories.Any(x=>x.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase)))
+        if (_categories.Any(x => x.Name.Equals(category.Name, StringComparison.OrdinalIgnoreCase)))
         {
             return;
         }
@@ -30,5 +30,26 @@ public class CategoryInMemoryRepository : ICategoryRepository
     public IEnumerable<Category> GetCategories()
     {
         return _categories;
+    }
+
+    public Category GetCategoryById(int categoryId)
+    {
+        return _categories?.FirstOrDefault(x => x.CategoryId == categoryId) ?? new();
+
+    }
+
+    public void UpdateCategory(Category category)
+    {
+        var categoryToUpdate = _categories.FirstOrDefault(x => x.CategoryId == category.CategoryId);
+
+        if (categoryToUpdate != null)
+        {
+            if (_categories.Any(x=>x.Name == category.Name && x.CategoryId != category.CategoryId))
+            {
+                return;
+            }
+            categoryToUpdate.Description = category.Description;
+            categoryToUpdate.Name = category.Name;
+        }
     }
 }

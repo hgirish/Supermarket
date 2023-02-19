@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{6B28BAD9-CB5B-4119-BC60-5137A9F5CF46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{6B28BAD9-CB5B-4119-BC60-5137A9F5CF46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCases", "UseCases\UseCases.csproj", "{09A82DFB-0F41-43CB-A040-651C3F8FCD09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UseCases", "UseCases\UseCases.csproj", "{09A82DFB-0F41-43CB-A040-651C3F8FCD09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreBusiness", "CoreBusiness\CoreBusiness.csproj", "{70B990DE-9186-49AD-8FF8-827273EEB369}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreBusiness", "CoreBusiness\CoreBusiness.csproj", "{70B990DE-9186-49AD-8FF8-827273EEB369}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.Datastore.InMemory", "Plugins.Datastore.InMemory\Plugins.Datastore.InMemory.csproj", "{C0A06577-BEB4-4C41-B14B-CF1652DAA6C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.Datastore.InMemory", "Plugins.Datastore.InMemory\Plugins.Datastore.InMemory.csproj", "{C0A06577-BEB4-4C41-B14B-CF1652DAA6C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,6 +2,7 @@
 
 @inject IViewCategoriesUseCase ViewCategoriesUseCase
 @inject NavigationManager NavigationManager
+@inject IEditCategoryUseCase EditCategoryUseCase
 
 <h3>Manaage Categories</h3>
 
@@ -21,6 +22,8 @@
                 <tr>
                     <td>@category.Name</td>
                     <td>@category.Description</td>
+                    <td><button type="button" class="btn btn-light" 
+                        @onclick="@(() => EditCategory(category.CategoryId))">Edit</button></td>
                 </tr>
             }
             </tbody>
@@ -42,5 +45,9 @@
     private void OnClickAddCategory()
     {
         NavigationManager.NavigateTo("/addcategory");
+    }
+    private void EditCategory(int categoryId)
+    {
+        NavigationManager.NavigateTo($"/editcategory/{categoryId}");
     }
 }
