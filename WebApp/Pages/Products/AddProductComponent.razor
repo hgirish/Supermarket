@@ -1,0 +1,67 @@
+﻿@page "/addproduct"
+
+@inject IAddProductUseCase AddProductUseCase
+@inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
+@inject NavigationManager NavigationManager
+@inject IViewCategoriesUseCase ViewCategoriesUseCase
+
+<h3>Add Product</h3>
+
+@if (_product != null)
+{
+    <EditForm Model="_product" class="form-inline"
+          OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="categoryId">Category</label>
+            <select id="categoryId" @bind="_product.CategoryId" class="form-select">
+                <option  selected></option>
+                @foreach (var cat in _categories)
+            {
+                <option value="@cat.CategoryId">@cat.Name</option>
+            }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            <InputText id="name" @bind-Value="_product.Name" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber id="price" @bind-Value="_product.Price" class="form-control"></InputNumber>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <InputNumber id="quantity" @bind-Value="_product.Quantity" class="form-control"></InputNumber>
+        </div>
+       
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+    </EditForm>
+}
+
+@code {
+    private Product _product = new();
+    private IEnumerable<Category> _categories;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _product = new Product();
+        _categories = ViewCategoriesUseCase.Execute();
+    }
+    private void OnValidSubmit()
+    {
+        AddProductUseCase.Execute(_product);
+        NavigationManager.NavigateTo("/products");
+    }
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/products");
+    }
+}

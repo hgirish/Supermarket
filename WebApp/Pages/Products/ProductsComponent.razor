@@ -1,6 +1,7 @@
 ﻿@page "/products"
 @inject IViewProductsUseCase ViewProductsUseCase
 @inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
+@inject NavigationManager NavigationManager
 
 <h3>Products</h3>
 <table class="table">
@@ -16,15 +17,18 @@
         @foreach (var product in _products)
         {
             <tr>
-                <td>@GetCategoryByIdUseCase.Execute(product.CategoryId).Name</td>
+                <td>@GetCategoryByIdUseCase.Execute(product.CategoryId.Value).Name</td>
                 <td>@product.Name</td>
-                <td>@product.Price.ToString("C")</td>
+                <td>@product.Price.Value.ToString("C")</td>
                 <td>@product.Quantity</td>
                
             </tr>
         }
     </tbody>
 </table>
+
+<br />
+<button type="button" class="btn btn-primary" @onclick="OnClickAddProduct">Add Product</button>
 @code {
     private IEnumerable<Product> _products;
 
@@ -32,5 +36,9 @@
     {
         base.OnInitialized();
         _products = ViewProductsUseCase.Execute();
+    }
+    private void OnClickAddProduct()
+    {
+        NavigationManager.NavigateTo("/addproduct");
     }
 }
