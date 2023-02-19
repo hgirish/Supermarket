@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Plugins.Datastore.InMemory;
-using UseCases;
+using UseCases.CategoryUseCases;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.ProductUseCases;
 using UseCases.UseCaseInterfaces;
 using WebApp.Data;
 
@@ -13,11 +12,14 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductInMemoryRepository>();
+
 builder.Services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
 builder.Services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
 builder.Services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
 builder.Services.AddTransient<IGetCategoryByIdUseCase, GetCategoryByIdUseCase>();   
 builder.Services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
+builder.Services.AddTransient<IViewProductsUseCase, ViewProductsUseCase>();
 
 var app = builder.Build();
 

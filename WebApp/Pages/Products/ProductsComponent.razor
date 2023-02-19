@@ -1,0 +1,36 @@
+﻿@page "/products"
+@inject IViewProductsUseCase ViewProductsUseCase
+@inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
+
+<h3>Products</h3>
+<table class="table">
+    <thead>
+        <tr>           
+            <th>Category</th>
+            <th>Name</th>            
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in _products)
+        {
+            <tr>
+                <td>@GetCategoryByIdUseCase.Execute(product.CategoryId).Name</td>
+                <td>@product.Name</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>@product.Quantity</td>
+               
+            </tr>
+        }
+    </tbody>
+</table>
+@code {
+    private IEnumerable<Product> _products;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _products = ViewProductsUseCase.Execute();
+    }
+}

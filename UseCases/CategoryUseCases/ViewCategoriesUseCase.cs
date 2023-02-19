@@ -2,7 +2,7 @@
 using UseCases.DataStorePluginInterfaces;
 using UseCases.UseCaseInterfaces;
 
-namespace UseCases;
+namespace UseCases.CategoryUseCases;
 public class ViewCategoriesUseCase : IViewCategoriesUseCase
 {
     private readonly ICategoryRepository _categoryRepository;
