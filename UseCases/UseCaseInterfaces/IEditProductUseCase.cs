@@ -1,6 +1,6 @@
 ﻿using CoreBusiness;
 
-namespace UseCases.ProductUseCases;
+namespace UseCases.UseCaseInterfaces;
 public interface IEditProductUseCase
 {
     void Execute(Product product);

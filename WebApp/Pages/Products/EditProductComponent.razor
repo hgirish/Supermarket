@@ -1,0 +1,87 @@
+﻿@page "/editproduct/{productId:int}"
+
+
+@inject IEditProductUseCase EditProductUseCase
+@inject NavigationManager NavigationManager
+@inject IGetProductByIdUseCase GetProductByIdUseCase
+@inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
+@inject IViewCategoriesUseCase ViewCategoriesUseCase
+
+<h3>Edit Product</h3>
+
+@if (_product != null)
+{
+    <EditForm Model="_product" class="form-inline"
+          OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        <div class="form-group">
+            <label for="categoryId">Category</label>
+            <select id="categoryId" @bind="_product.CategoryId" class="form-select">
+                <option selected></option>
+                @foreach (var cat in _categories)
+                {
+                    <option value="@cat.CategoryId">@cat.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            <InputText id="name" @bind-Value="_product.Name" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber id="price" @bind-Value="_product.Price" class="form-control"></InputNumber>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <InputNumber id="quantity" @bind-Value="_product.Quantity" class="form-control"></InputNumber>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" @onclick="OnCancel">Cancel</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int ProductId { get; set; }
+
+    private Product _product;
+    private IEnumerable<Category> _categories;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _product = new Product();
+        _categories = ViewCategoriesUseCase.Execute();
+    }
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        var productToUpdate = GetProductByIdUseCase.Execute(ProductId);
+        _product = new Product
+            {
+                ProductId = productToUpdate.ProductId,
+                Description = productToUpdate.Description,
+                Name = productToUpdate.Name,
+                CategoryId = productToUpdate.CategoryId,
+                Price = productToUpdate.Price,
+                Quantity = productToUpdate.Quantity
+            };
+    }
+    private void OnValidSubmit()
+    {
+        EditProductUseCase.Execute(_product);
+        NavigationManager.NavigateTo("/products");
+    }
+    private void OnCancel()
+    {
+        NavigationManager.NavigateTo("/products");
+    }
+
+}

@@ -4,16 +4,16 @@ using UseCases.UseCaseInterfaces;
 
 namespace UseCases.ProductUseCases;
 
-public class AddProductUseCase : IAddProductUseCase
+public class GetProductByIdUseCase : IGetProductByIdUseCase
 {
     private readonly IProductRepository _productRepository;
 
-    public AddProductUseCase(IProductRepository productRepository)
+    public GetProductByIdUseCase(IProductRepository productRepository)
     {
         _productRepository = productRepository;
     }
-    public void Execute(Product product)
+    public Product Execute(int productId)
     {
-        _productRepository.AddProduct(product);
+        return _productRepository.GetProductById(productId);
     }
 }

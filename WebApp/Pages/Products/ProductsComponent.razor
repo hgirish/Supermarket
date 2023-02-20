@@ -2,15 +2,17 @@
 @inject IViewProductsUseCase ViewProductsUseCase
 @inject IGetCategoryByIdUseCase GetCategoryByIdUseCase
 @inject NavigationManager NavigationManager
+@inject IDeleteProductUseCase DeleteProductUseCase
 
 <h3>Products</h3>
 <table class="table">
     <thead>
         <tr>           
-            <th>Category</th>
+            <th>Product</th>
             <th>Name</th>            
             <th>Price</th>
             <th>Quantity</th>
+            <td></td>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +23,14 @@
                 <td>@product.Name</td>
                 <td>@product.Price.Value.ToString("C")</td>
                 <td>@product.Quantity</td>
-               
+               <td>
+                        <button type="button" class="btn btn-light" 
+                        @onclick="@(() => EditProduct(product.ProductId))">Edit</button>
+                        <button type="button" class="btn btn-light"
+                        @onclick="@(() => DeleteProduct(product.ProductId))">
+                            Delete
+                        </button>
+                    </td>
             </tr>
         }
     </tbody>
@@ -35,10 +44,24 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        _products = ViewProductsUseCase.Execute();
+        LoadProducts();
     }
     private void OnClickAddProduct()
     {
         NavigationManager.NavigateTo("/addproduct");
     }
+    private void EditProduct(int productId)
+    {
+        NavigationManager.NavigateTo($"/editproduct/{productId}");
+    }
+    private void DeleteProduct(int productId)
+    {
+        DeleteProductUseCase.Execute(productId);
+        LoadProducts();
+    }
+    private void LoadProducts()
+    {
+        _products = ViewProductsUseCase.Execute().ToList();
+    }
 }
+

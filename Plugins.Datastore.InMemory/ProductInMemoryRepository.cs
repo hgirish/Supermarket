@@ -36,12 +36,17 @@ public class ProductInMemoryRepository : IProductRepository
 
     public void DeleteProduct(int productId)
     {
-        throw new NotImplementedException();
+        var productToDelete = GetProductById(productId);
+        if (productToDelete == null)
+        {
+            return;
+        }
+        _products.Remove(productToDelete);
     }
 
     public Product GetProductById(int productId)
     {
-        throw new NotImplementedException();
+        return _products?.FirstOrDefault(x => x.ProductId == productId) ?? new();
     }
 
     public IEnumerable<Product> GetProducts()
@@ -51,6 +56,13 @@ public class ProductInMemoryRepository : IProductRepository
 
     public void UpdateProduct(Product product)
     {
-        throw new NotImplementedException();
+        var productToUpdate = GetProductById(product.ProductId);
+        if (productToUpdate != null)
+        {
+            productToUpdate.Price = product.Price;
+            productToUpdate.CategoryId = product.CategoryId;
+            productToUpdate.Name = product.Name;
+            productToUpdate.Quantity = product.Quantity;
+        }
     }
 }
