@@ -1,4 +1,5 @@
 using Plugins.Datastore.InMemory;
+using UseCases.CashierConsoleUseCases;
 using UseCases.CategoryUseCases;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.ProductUseCases;
@@ -26,6 +27,7 @@ builder.Services.AddTransient<IEditProductUseCase, EditProductUseCase>();
 builder.Services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
 builder.Services.AddTransient<IGetProductByIdUseCase, GetProductByIdUseCase>();
 
+builder.Services.AddTransient<IViewProductsByCategoryIdUseCase, ViewProductsByCategoryIdUseCase>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
