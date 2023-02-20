@@ -54,6 +54,11 @@ public class ProductInMemoryRepository : IProductRepository
         return _products;
     }
 
+    public IEnumerable<Product> GetProductsByCategoryId(int categoryId)
+    {
+        return _products.Where(x=> x.CategoryId == categoryId);
+    }
+
     public void UpdateProduct(Product product)
     {
         var productToUpdate = GetProductById(product.ProductId);

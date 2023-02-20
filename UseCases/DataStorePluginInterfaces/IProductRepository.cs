@@ -9,5 +9,5 @@ public interface IProductRepository
     IEnumerable<Product> GetProducts();
     Product GetProductById(int productId);
     void UpdateProduct(Product product);
-
+    IEnumerable<Product> GetProductsByCategoryId(int categoryId);
 }
