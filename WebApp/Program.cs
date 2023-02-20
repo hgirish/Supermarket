@@ -28,6 +28,9 @@ builder.Services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
 builder.Services.AddTransient<IGetProductByIdUseCase, GetProductByIdUseCase>();
 
 builder.Services.AddTransient<IViewProductsByCategoryIdUseCase, ViewProductsByCategoryIdUseCase>();
+builder.Services.AddTransient<ISellProductUseCase, SellProductUseCase>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
