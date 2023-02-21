@@ -6,40 +6,23 @@ namespace UseCases.CashierConsoleUseCases;
 public class SellProductUseCase : ISellProductUseCase
 {
     private readonly IProductRepository _productRepository;
+    private readonly IRecordTransactionUseCase _recordTransactionUseCase;
 
-    public SellProductUseCase(IProductRepository productRepository)
+    public SellProductUseCase(IProductRepository productRepository,
+        IRecordTransactionUseCase recordTransactionUseCase)
     {
         _productRepository = productRepository;
+        _recordTransactionUseCase = recordTransactionUseCase;
     }
-    public void Execute(int productId, int quantityToSell)
+    public void Execute(string cashierName, int productId, int quantityToSell)
     {
         var product = _productRepository.GetProductById(productId);
         if (product == null) { return; }
+        _recordTransactionUseCase.Execute(cashierName, productId, quantityToSell);
+
         product.Quantity -= quantityToSell;
 
         _productRepository.UpdateProduct(product);
-    }
-}
 
-public class RecordTransactionUseCase
-{
-    
-    private readonly ITransactionRepository _transactionRepository;
-    private readonly IGetProductByIdUseCase _getProductByIdUseCase;
-
-    public RecordTransactionUseCase(ITransactionRepository transactionRepository,
-        IGetProductByIdUseCase getProductByIdUseCase)
-    {
-        
-        _transactionRepository = transactionRepository;
-        _getProductByIdUseCase = getProductByIdUseCase;
-    }
-
-    public void Execute(int productId, int quantity)
-    {
-        var product = _getProductByIdUseCase.Execute(productId);
-        if (product == null) { return; }
-        var price = product!.Price!.Value ;
-        _transactionRepository.Save(productId, price,quantity);
     }
 }

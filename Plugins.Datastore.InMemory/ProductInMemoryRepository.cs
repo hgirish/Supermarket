@@ -71,16 +71,3 @@ public class ProductInMemoryRepository : IProductRepository
         }
     }
 }
-
-public class TransactionInMemoryRepository : ITransactionRepository
-{
-    public IEnumerable<Transaction> GetByDay(DateTime date)
-    {
-        
-    }
-
-    public void Save(int productId, double price, int quantity)
-    {
-        
-    }
-}
