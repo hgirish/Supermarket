@@ -76,11 +76,11 @@ public class TransactionInMemoryRepository : ITransactionRepository
 {
     public IEnumerable<Transaction> GetByDay(DateTime date)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void Save(int productId, double price, int quantity)
     {
-        throw new NotImplementedException();
+        
     }
 }
