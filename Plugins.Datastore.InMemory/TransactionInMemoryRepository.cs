@@ -1,5 +1,7 @@
 ﻿using CoreBusiness;
+using System.Diagnostics;
 using UseCases.DataStorePluginInterfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Plugins.Datastore.InMemory;
 
@@ -61,5 +63,21 @@ public class TransactionInMemoryRepository : ITransactionRepository
         });
 
         Console.WriteLine($"Transactions count: {_transactions.Count()}");
+    }
+
+    public IEnumerable<Transaction> Search(string cashierName, DateTime startDate, DateTime endDate)
+    {
+        Console.WriteLine($"Search: cashier name: {cashierName}, date : {startDate.Date} {endDate.Date}");
+        var transactions = _transactions.Where(x => 
+        x.Timestamp.Date >= startDate.Date && x.Timestamp.Date <= endDate.Date.AddDays(1).Date);
+        if (!string.IsNullOrWhiteSpace(cashierName))
+        {
+           transactions = transactions.Where(x => 
+            x.CashierName.Equals(cashierName, StringComparison.OrdinalIgnoreCase));      
+          
+
+        }
+        Console.WriteLine($"Trans count: {transactions.Count()}");
+        return transactions;
     }
 }
