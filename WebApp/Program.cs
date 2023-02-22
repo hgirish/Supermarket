@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Plugins.Datastore.InMemory;
+using Plugins.DataStore.SQL;
 using UseCases.CashierConsoleUseCases;
 using UseCases.CategoryUseCases;
 using UseCases.DataStorePluginInterfaces;
@@ -12,6 +15,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+builder.Services.AddDbContext<MarketContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.EnableSensitiveDataLogging();
+});
+
 builder.Services.AddScoped<ICategoryRepository, CategoryInMemoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductInMemoryRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionInMemoryRepository>();

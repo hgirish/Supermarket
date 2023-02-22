@@ -6,7 +6,7 @@ public class Product
 {
     public int ProductId { get; set; }
     [Required]
-    public int? CategoryId { get; set; }
+    public int CategoryId { get; set; }
     [Required]
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
@@ -14,4 +14,7 @@ public class Product
     public double? Price { get; set; }
     [Required]
     public int? Quantity { get; set; }
+
+    // Seeding HasData gives error if uncommented
+    //public Category Category { get; set; } = new Category();
 }
