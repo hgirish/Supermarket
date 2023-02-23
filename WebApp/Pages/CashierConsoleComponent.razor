@@ -4,12 +4,13 @@
         <h3>Cashier's Console'</h3>
     </div>
     <div class="col-2">Cashier Name</div>
-    <div class="col"><input required type="text" id="cashier" class="form-control" @bind="_cashierName" /></div>
+    <div class="col"><input required type="text" id="cashier" class="form-control"
+        @bind="_cashierName" @bind:after="OnCashierChange" /></div>
 </div>
 <br />
 
 <div class="row">
-    <div class="col-4 col-md-6">
+    <div class="col-4 col-md-3">
         <SelectProductForSellingComponent OnProductSelected="SelectProduct"></SelectProductForSellingComponent>
       <br />
       <SellProductComponent 
@@ -48,5 +49,13 @@
     private void SellProduct(Product product)
     {
         transactionComponent.LoadTransactions(_cashierName);
+    }
+    private void OnCashierChange()
+    {
+        Console.WriteLine($"OnCahierChange: {_cashierName}");
+        //if (!string.IsNullOrEmpty(_cashierName))
+        //{
+            transactionComponent.LoadTransactions(_cashierName);
+       // }   
     }
 }

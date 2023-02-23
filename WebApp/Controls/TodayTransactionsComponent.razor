@@ -37,6 +37,12 @@
 
     public void LoadTransactions(string cashierName)
     {
+        if (string.IsNullOrEmpty(cashierName))
+        {
+            _transactions = new List<Transaction>();
+            StateHasChanged();
+            return;
+        }
         Console.WriteLine($"Load Transactions: Cashier name: {cashierName}");
         _transactions = GetTodayTransactonsUseCase.Execute(cashierName).ToList();
         StateHasChanged();
