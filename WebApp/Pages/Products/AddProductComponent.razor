@@ -1,4 +1,6 @@
 ﻿@page "/addproduct"
+@attribute [Authorize(Policy = "AdminOnly")]
+
 
 @inject IAddProductUseCase AddProductUseCase
 @inject IGetCategoryByIdUseCase GetCategoryByIdUseCase

@@ -1,5 +1,7 @@
 ﻿@page "/editcategory/{categoryId:int}"
 
+@attribute [Authorize(Policy = "AdminOnly")]
+
 
 @inject IEditCategoryUseCase EditCategoryUseCase
 @inject NavigationManager NavigationManager

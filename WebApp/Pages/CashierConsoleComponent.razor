@@ -1,5 +1,9 @@
 ﻿@page "/cashier_console"
-<div class="row">
+@attribute [Authorize(Policy = "CashierOnly")]
+
+@if (!string.IsNullOrWhiteSpace(_cashierName))
+{
+    <div class="row">
     <div class="col-7">
         <h3>Cashier's Console'</h3>
     </div>
@@ -7,7 +11,7 @@
     <div class="col"><input required type="text" id="cashier" class="form-control"
         @bind="_cashierName" @bind:after="OnCashierChange" /></div>
 </div>
-<br />
+    <br />
 
 <div class="row">
     <div class="col-4 col-md-3">
@@ -22,16 +26,25 @@
         <TodayTransactionsComponent @ref="transactionComponent"></TodayTransactionsComponent>
     </div>
 </div>
+}
+
+
 @code {
     private TodayTransactionsComponent transactionComponent;
 
     private string _cashierName = string.Empty;
 
     private Product _selectedProduct;
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
 
+    [CascadingParameter]
+    private Task<AuthenticationState> _authState{ get; set; }
+
+    private AuthenticationState authState;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authState = await _authState;
+        _cashierName = authState.User.Identity.Name;
     }
     protected override void OnAfterRender(bool firstRender)
     {
