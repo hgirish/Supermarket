@@ -1,4 +1,5 @@
 ﻿using CoreBusiness;
+using Microsoft.EntityFrameworkCore;
 using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.SQL;
@@ -31,8 +32,8 @@ public class TransactionRepository : ITransactionRepository
         }
         else
         {
-            return _db.Transactions.Where(x => 
-            x.CashierName.ToLower() == cashierName.ToLower() &&
+            return _db.Transactions.Where(x =>
+            EF.Functions.Like(x.CashierName, $"%{cashierName}%") &&
                 x.Timestamp.Date == date.Date);
         }
     }
@@ -66,7 +67,10 @@ public class TransactionRepository : ITransactionRepository
         }
         else
         {
-            return transactions.Where(x => x.CashierName.ToLower() == cashierName.ToLower());
+            return transactions.Where(
+                x => 
+                EF.Functions.Like(x.CashierName, $"%{cashierName}%")
+                );
         }
     }
 }
