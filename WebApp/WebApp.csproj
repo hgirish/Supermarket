@@ -28,4 +28,8 @@
     <ProjectReference Include="..\UseCases\UseCases.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
